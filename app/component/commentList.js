@@ -94,10 +94,9 @@ const styles = StyleSheet.create({
     },
     reply: {
         padding: 6,
-        fontSize: 16,
-        marginBottom:10,
+        fontSize: 14,
+        marginBottom: 10,
         backgroundColor: "#F7F8F8"
-
 
     },
     titleLayout: {

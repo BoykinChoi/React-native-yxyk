@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 import Banner from '../component/banner'
-import SignInPlne from '../component/signinPlne'
+import SignInPanel from '../component/signinPanel'
 
 import requestData from '../util/ApiHelper'
 
@@ -39,8 +39,8 @@ export default class Home extends Component {
                 navigation.state.params.cateSelectPress()
             }}>
                 <Image
-                    style={{ width: 18, height: 18, marginLeft: 15 }}
-                    source={require("../images/icon_screening.png")}></Image>
+                    style={{ width: 23, height: 18, marginLeft: 15 }}
+                    source={require("../images/search.png")}></Image>
             </TouchableOpacity>
         )
         ,
@@ -79,7 +79,9 @@ export default class Home extends Component {
                             onRefresh={() => { this.getData() }}
                             refreshing={this.state.loading}
                             showsVerticalScrollIndicator={false}
-                            ListHeaderComponent={<HomeHeader onSignInPlneClick={this.onSignInPlnePress} />}
+                            ListHeaderComponent={<HomeHeader
+                                onSignInPlneClick={this.onSignInPlnePress}
+                                onTestPlneClick={this.onTestPlnePress} />}
                             keyExtractor={item => item.id.toString()}
                         ></FlatList>) : (<Text>暂无数据</Text>)
                     }
@@ -125,6 +127,10 @@ export default class Home extends Component {
 
     onSignInPlnePress = () => {
         this.props.navigation.navigate("SignIn")
+    }
+
+    onTestPlnePress = () => {
+        this.props.navigation.navigate("Evaluation")
     }
 
     renderCourse = ({ item }) => {
@@ -252,10 +258,15 @@ class HomeHeader extends Component {
                     keyExtractor={item => item.id.toString()}
                 />
                 {/* HomeHeader 子组件里 onSignInPlneClick 通过 HomeHeader的props 调用HomeHeader的父组件Home 里的onSignInPlneClick */}
-                <SignInPlne onSignInPlneClick={this.props.onSignInPlneClick}></SignInPlne>
+                <SignInPanel
+                    onSignInPlneClick={this.props.onSignInPlneClick}
+                    onTestPlneClick={this.props.onTestPlneClick}></SignInPanel>
                 <View style={styles.recommend}>
                     <Text style={styles.recommendText}>精选课程推荐</Text>
-                    <Text>更多></Text>
+                    <View style={styles.more}>
+                        <Text style={styles.more}>更多</Text>
+                        <Image style={{ width: 8, height: 12 }} source={require("../images/arrow_right_small.png")}></Image>
+                    </View>
                 </View>
             </View>
         )
@@ -355,12 +366,18 @@ const styles = StyleSheet.create({
     recommend: {
         alignItems: "center",
         flexDirection: "row",
-        justifyContent: "space-between",
         height: 50
     },
     recommendText: {
         fontSize: 23,
         fontWeight: "bold"
+    },
+    more: {
+        color:"#666666",
+        textAlign: "right",
+        alignItems: "center",
+        flex: 1,
+        flexDirection: "row"
     }
 });
 

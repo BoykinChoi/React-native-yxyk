@@ -212,13 +212,13 @@ const styles = StyleSheet.create(
 
         },
         title: {
-            alignItems: "flex-start",
-            flexDirection: "row"
+            alignItems: "center",
+            flexDirection: "row",
+            marginBottom: 10
         },
         introTitle: {
             flex: 1,
             fontSize: 17,
-            marginBottom: 10
         },
         own: {
             borderWidth: 1,

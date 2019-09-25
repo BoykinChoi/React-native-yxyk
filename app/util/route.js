@@ -11,6 +11,7 @@ import IndustryList from "../component/industryList";
 import Home from "../page/home";
 import CourseDetail from "../page/courseDetail";
 import SignIn from "../page/signin";
+import Evaluation from "../page/evaluation";
 import UserInfo from "../page/userInfo";
 
 //createNavigator 需在 createAppContainer 前
@@ -37,6 +38,9 @@ const AppNavigator = createStackNavigator(
         SignIn: {
             screen: SignIn
         },
+        Evaluation: {
+            screen: Evaluation
+        }
     },
     //  {
     //   initialRouteName: 'Home'

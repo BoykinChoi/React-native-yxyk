@@ -16,6 +16,9 @@ import { FlatList } from "react-native-gesture-handler";
 var _scrollView
 
 export default class SignIn extends Component {
+    static navigationOptions = {
+        title: "每日打卡"
+    }
     constructor(props) {
         super(props)
         this.state = {
@@ -31,7 +34,7 @@ export default class SignIn extends Component {
     }
 
     render() {
-       
+
         return (
             <View style={styles.flexLayout}>
                 <View style={styles.flexLayout}>
@@ -46,7 +49,7 @@ export default class SignIn extends Component {
                         </FlatList>
                     </View>
                     <View style={styles.cutline}></View>
-                    <ScrollView ref={(scrollView) => {_scrollView = scrollView}} showsVerticalScrollIndicator={false} style={styles.flexLayout}>
+                    <ScrollView ref={(scrollView) => { _scrollView = scrollView }} showsVerticalScrollIndicator={false} style={styles.flexLayout}>
                         {
                             this.state.taskInfo == null || this.state.taskInfo == undefined ? null : (<View>
                                 <View style={styles.content}>
@@ -97,10 +100,10 @@ export default class SignIn extends Component {
                     selectedDay: item.date,
                 })
                 this.getTodayTaskInfo(item.date)
-                 //滚动到顶部
+                //滚动到顶部
                 _scrollView.scrollTo({ x: 0, y: 0, animated: true })
             }}>
-                <Text style={item.date == this.state.selectedDay ? styles.daySelected : (item.is_today ? styles.today : (item.is_clock_in ? styles.signIned : styles.dayNormal))}>{item.day}</Text>
+                <Text style={[styles.day, item.date == this.state.selectedDay ? styles.daySelected : (item.is_today ? styles.today : (item.is_clock_in ? styles.signIned : styles.dayNormal))]}>{item.day}</Text>
             </TouchableOpacity>
         </View>)
     }
@@ -137,7 +140,7 @@ export default class SignIn extends Component {
             this.setState({
                 taskInfo: resData
             })
-            
+
 
         })
     }
@@ -171,24 +174,34 @@ const styles = StyleSheet.create(
         },
         dayNormal: {
             padding: 5,
-            color: "#000000"
+
         },
         today: {
             padding: 6,
-            color: "#E60012"
+            color: "#E60012",
+            textAlign: "center",
+            textAlignVertical: "center"
         },
         signIned: {
             borderWidth: 1,
-            padding: 4,
             borderRadius: 1024,
             borderColor: "#6F89F8"
         },
+        day: {
+            paddingTop: 4,
+            paddingBottom: 4,
+            paddingLeft: 6,
+            paddingRight: 6,
+            borderWidth: 1,
+            borderColor: "#ffffff",
+            textAlign: "center",
+            textAlignVertical: "center",
+        },
         daySelected: {
             color: "#ffffff",
-            backgroundColor: "#6F89F8",
             borderWidth: 1,
-            padding: 4,
             borderRadius: 1024,
+            backgroundColor: "#6F89F8",
             borderColor: "#6F89F8"
         },
         content: {
