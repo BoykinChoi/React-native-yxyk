@@ -125,7 +125,8 @@ export default class Evaluation extends Component {
 const styles = StyleSheet.create(
     {
         page: {
-            padding: 10,
+            paddingLeft: 10,
+            paddingRight: 10,
             color: "#F5F6F6"
         },
 
@@ -150,11 +151,11 @@ const styles = StyleSheet.create(
             borderBottomWidth: 0
         },
         cateItemSelected: {
-            fontWeight:"bold",
-            fontSize: 16,
+            fontWeight: "bold",
+            fontSize: 18,
             color: "#FD5F00",
-            borderBottomWidth: 3,
-            borderBottomColor: "#FD5F00"
+            borderTopWidth: 4,
+            borderTopColor: "#FD5F00"
         },
         eItemBg: {
             flex: 1,

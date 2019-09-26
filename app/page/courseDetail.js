@@ -4,12 +4,14 @@ import {
     View,
     Image,
     Text,
+    Modal,
     ToastAndroid,
     TouchableOpacity,
 } from "react-native"
 import Video from 'react-native-video'
 import requestData from '../util/ApiHelper'
 import CatalogueList from '../component/catalogueList'
+import PromptDialog from '../widget/promptDialog'
 
 export default class CourserDetail extends Component {
     static navigationOptions = {
@@ -21,6 +23,7 @@ export default class CourserDetail extends Component {
             course: {},
             isLike: false,
             playUrl: "",
+            dialogShow: false
         }
     }
 
@@ -98,11 +101,27 @@ export default class CourserDetail extends Component {
                         </CatalogueList>
                     </View>
                 </View >
-
-
+                <Modal
+                    visible={this.state.dialogShow}
+                    animationType="none"
+                    transparent={true}
+                    onRequestClose={() => {
+                        alert("Modal has been closed.");
+                    }}
+                >
+                    <PromptDialog
+                        title="提示"
+                        content="您还未拥有该课程，是否前往购买？"
+                        onCancel={() => {
+                            this.setState({
+                                dialogShow: false
+                            })
+                        }}
+                        onPositivePress={() => this.onPositivePress()}
+                    ></PromptDialog>
+                </Modal>
             </View >
         )
-
     }
 
     onBuffer = () => {
@@ -111,6 +130,13 @@ export default class CourserDetail extends Component {
 
     onVedioError = () => {
 
+    }
+
+    onPositivePress = () => {
+        this.setState({
+            dialogShow: false
+        })
+        ToastAndroid.show('gan', ToastAndroid.SHORT);
     }
 
     /**
@@ -123,7 +149,10 @@ export default class CourserDetail extends Component {
                 playUrl: item.video_url
             })
         } else {
-            ToastAndroid.show('请先购买完整课程', ToastAndroid.SHORT);
+            this.setState({
+                dialogShow: true
+            })
+            //ToastAndroid.show('请先购买完整课程', ToastAndroid.SHORT);
         }
 
     }

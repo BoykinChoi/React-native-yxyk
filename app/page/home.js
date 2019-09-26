@@ -80,8 +80,9 @@ export default class Home extends Component {
                             refreshing={this.state.loading}
                             showsVerticalScrollIndicator={false}
                             ListHeaderComponent={<HomeHeader
-                                onSignInPlneClick={this.onSignInPlnePress}
-                                onTestPlneClick={this.onTestPlnePress} />}
+                                //  onMenuClick={(id) => this.onMenuPress(id)}
+                                navigation={this.props.navigation}
+                            />}
                             keyExtractor={item => item.id.toString()}
                         ></FlatList>) : (<Text>暂无数据</Text>)
                     }
@@ -122,15 +123,6 @@ export default class Home extends Component {
         } else {
             this.props.navigation.navigate("Login");
         }
-
-    }
-
-    onSignInPlnePress = () => {
-        this.props.navigation.navigate("SignIn")
-    }
-
-    onTestPlnePress = () => {
-        this.props.navigation.navigate("Evaluation")
     }
 
     renderCourse = ({ item }) => {
@@ -240,11 +232,21 @@ class HomeHeader extends Component {
                 { id: "4", icon: '../images/find.png', title: "随时发现" },
             ]
         }
-        this.onItemPress = this.onItemPress.bind(this); //自定义 函数绑定this
+        //this.onItemPress = this.onItemPress.bind(this); //自定义 函数绑定this
     }
 
     componentDidMount() {
         this.getMenuData()
+    }
+
+    //签到块点击，通过props和子组件通信
+    onSignInPlnePress = () => {
+        this.props.navigation.navigate("SignIn")
+    }
+
+    //测评块点击，通过props和子组件通信
+    onTestPlnePress = () => {
+        this.props.navigation.navigate("Evaluation")
     }
 
     render() {
@@ -259,8 +261,8 @@ class HomeHeader extends Component {
                 />
                 {/* HomeHeader 子组件里 onSignInPlneClick 通过 HomeHeader的props 调用HomeHeader的父组件Home 里的onSignInPlneClick */}
                 <SignInPanel
-                    onSignInPlneClick={this.props.onSignInPlneClick}
-                    onTestPlneClick={this.props.onTestPlneClick}></SignInPanel>
+                    onSignInPlneClick={this.onSignInPlnePress}
+                    onTestPlneClick={this.onTestPlnePress}></SignInPanel>
                 <View style={styles.recommend}>
                     <Text style={styles.recommendText}>精选课程推荐</Text>
                     <View style={styles.more}>
@@ -272,19 +274,24 @@ class HomeHeader extends Component {
         )
     }
 
-    onItemPress() {
-        ToastAndroid.show('gan', ToastAndroid.SHORT);
-        this.props.navigation.navigate("CourseDetail");
-    }
+    renderMenu = ({ item }) => {
+        return (
+            <View style={styles.menuItem}>
+                <TouchableOpacity onPress={() => {
+                    if (item.id == 23) {
+                        this.props.navigation.navigate("OfflineOrg")
+                    }
+                }}>
+                    <View style={styles.menuItem}>
+                        <Image style={styles.menuImg} source={{ uri: item.icon }}></Image>
+                        {/* <Image style={styles.menuImg} source={require(item.icon)}></Image> */}
+                        <Text style={styles.menuText}>{item.title}</Text>
+                    </View>
+                </TouchableOpacity>
+            </View >
 
-    renderMenu({ item }) {
-        return (<View style={styles.menuItem}>
-            <Image style={styles.menuImg} source={{ uri: item.icon }}></Image>
-            {/* <Image style={styles.menuImg} source={require(item.icon)}></Image> */}
-            <Text style={styles.menuText}>{item.title}</Text>
-        </View>)
+        )
     }
-
 
     getMenuData = () => {
         let url = "http://dev_cp.zzyzsw.com/api/app_menu/top_center_list";
@@ -297,6 +304,7 @@ class HomeHeader extends Component {
         })
             .then(res => res.json())
             .then(resData => {
+                resData.data[3].title = "品牌机构"
                 this.setState({
                     menus: resData.data,
                 });
@@ -373,7 +381,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     more: {
-        color:"#666666",
+        color: "#666666",
         textAlign: "right",
         alignItems: "center",
         flex: 1,

@@ -11,8 +11,6 @@ import { white } from "ansi-colors";
 
 export default class Banner extends Component {
 
-
-
     constructor(props) {
         super(props)
         this.state = {
@@ -123,7 +121,7 @@ export default class Banner extends Component {
 const styles = StyleSheet.create(
     {
         banner: {
-            height: 160
+            height: 140
         }
         , indicatorBg: {
             position: "absolute",

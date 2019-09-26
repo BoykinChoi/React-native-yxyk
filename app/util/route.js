@@ -10,6 +10,7 @@ import CommentList from "../component/commentList";
 import IndustryList from "../component/industryList";
 import Home from "../page/home";
 import CourseDetail from "../page/courseDetail";
+import OfflineOrg from "../page/offlineOrg";
 import SignIn from "../page/signin";
 import Evaluation from "../page/evaluation";
 import UserInfo from "../page/userInfo";
@@ -40,6 +41,9 @@ const AppNavigator = createStackNavigator(
         },
         Evaluation: {
             screen: Evaluation
+        },
+        OfflineOrg: {
+            screen: OfflineOrg
         }
     },
     //  {

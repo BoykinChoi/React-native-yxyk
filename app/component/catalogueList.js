@@ -51,10 +51,10 @@ export default class CatalogueList extends Component {
     renderItem = ({ item }) => {
         return (
             <TouchableOpacity onPress={() => {
-
                 if (item.is_free == 1 && !this.props.own) 
                 {
-                    ToastAndroid.show('请先购买完整课程', ToastAndroid.SHORT);
+                    //ToastAndroid.show('请先购买完整课程', ToastAndroid.SHORT);
+                    this.props.onItemClick(item)
                    
                 } else {//节点isfree为2j时可免费观看，或该课程已经购买。可直接观看
                     //通过props 与父组件通信
