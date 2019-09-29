@@ -16,7 +16,6 @@ requestData = (url, prams, callBack) => {
         .then(baseData => {
             if (baseData.code == 200) {
                 if (baseData.data == undefined || baseData.data == null) {
-                   
                     callBack(baseData)
                 } else {
                     callBack(baseData.data)

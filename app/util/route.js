@@ -13,6 +13,9 @@ import CourseDetail from "../page/courseDetail";
 import OfflineOrg from "../page/offlineOrg";
 import SignIn from "../page/signin";
 import Evaluation from "../page/evaluation";
+import EvaluationList from "../page/evaluationList";
+import EvaluationDesc from "../page/evaluationDesc";
+import EvaluationReport from "../page/evaluationReport";
 import UserInfo from "../page/userInfo";
 
 //createNavigator 需在 createAppContainer 前
@@ -39,11 +42,20 @@ const AppNavigator = createStackNavigator(
         SignIn: {
             screen: SignIn
         },
+        EvaluationList: {
+            screen: EvaluationList
+        },
         Evaluation: {
             screen: Evaluation
         },
         OfflineOrg: {
             screen: OfflineOrg
+        },
+        EvaluationDesc: {
+            screen: EvaluationDesc
+        },
+        EvaluationReport: {
+            screen: EvaluationReport
         }
     },
     //  {

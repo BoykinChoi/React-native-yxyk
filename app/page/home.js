@@ -246,7 +246,7 @@ class HomeHeader extends Component {
 
     //测评块点击，通过props和子组件通信
     onTestPlnePress = () => {
-        this.props.navigation.navigate("Evaluation")
+        this.props.navigation.navigate("EvaluationList")
     }
 
     render() {

@@ -10,9 +10,10 @@ import {
     ToastAndroid,
     TouchableOpacity,
 } from "react-native";
-import SignInList from "../component/signInList";
 import requestData from '../util/ApiHelper'
+import SignInList from "../component/signInList";
 import { FlatList } from "react-native-gesture-handler";
+import commUtil from '../util/commUtil'
 var _scrollView
 
 export default class SignIn extends Component {
@@ -137,6 +138,7 @@ export default class SignIn extends Component {
                 date: date
             }
         return requestData(url, data, (resData) => {
+            resData.content = commUtil.stripHtml(resData.content)
             this.setState({
                 taskInfo: resData
             })
