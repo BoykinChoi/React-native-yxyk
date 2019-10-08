@@ -37,7 +37,7 @@ export default class OfflineOrg extends Component {
         </View>)
     }
 
-    renderOrgItem({ item }) {
+    renderOrgItem = ({ item }) => {
         return (<View style={styles.item}>
             <View style={styles.rowDirection}>
                 <Image style={styles.headPic} source={{ uri: item.brand_logo }}></Image>
@@ -46,7 +46,14 @@ export default class OfflineOrg extends Component {
                     <Text style={styles.textSmall}>{item.brand_title}</Text>
                 </View>
                 <View style={styles.flexEnd}>
-                    <Text style={styles.showBrand}>查看品牌</Text>
+                    <TouchableOpacity onPress={() => {
+                        this.props.navigation.navigate("OrgDetail", {
+                            orgId: item.id
+                        });
+
+                    }}>
+                        <Text style={styles.showBrand}>查看品牌</Text>
+                    </TouchableOpacity>
                     <Text style={styles.textSmall}>{item.dist}</Text>
                 </View>
             </View>

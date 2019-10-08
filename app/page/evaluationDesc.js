@@ -101,12 +101,12 @@ const styles = StyleSheet.create(
             flex: 1,
         },
         eIcon: {
-            width: 80,
-            height: 80
+            width: 160,
+            height: 160
         },
 
         title: {
-            fontSize: 17,
+            fontSize: 18,
             marginBottom: 10
         },
 
@@ -116,6 +116,7 @@ const styles = StyleSheet.create(
             marginBottom: 16
         },
         info: {
+            margin: 10,
             padding: 20
         },
         desc: {

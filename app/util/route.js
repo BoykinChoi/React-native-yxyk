@@ -16,6 +16,7 @@ import Evaluation from "../page/evaluation";
 import EvaluationList from "../page/evaluationList";
 import EvaluationDesc from "../page/evaluationDesc";
 import EvaluationReport from "../page/evaluationReport";
+import OrgDetail from "../page/orgDetail";
 import UserInfo from "../page/userInfo";
 
 //createNavigator 需在 createAppContainer 前
@@ -56,6 +57,8 @@ const AppNavigator = createStackNavigator(
         },
         EvaluationReport: {
             screen: EvaluationReport
+        }, OrgDetail: {
+            screen: OrgDetail
         }
     },
     //  {

@@ -16,6 +16,7 @@ export default class CatalogueList extends Component {
         super(props)
         this.state = {
             data: [],
+            isAudio: false,
             playingNodeId: -1 //当前播放中的node
         }
     }
@@ -46,19 +47,19 @@ export default class CatalogueList extends Component {
         </View>)
     }
     /**
-     * 子item
+     * 子item  nodes
      */
     renderItem = ({ item }) => {
         return (
             <TouchableOpacity onPress={() => {
-                if (item.is_free == 1 && !this.props.own) 
-                {
-                    //ToastAndroid.show('请先购买完整课程', ToastAndroid.SHORT);
-                    this.props.onItemClick(item)
-                   
+                let isAudio = this.state.isAudio
+                if (item.is_free == 1 && !this.props.own) {
+                    //通过props 与父组件通信
+                    this.props.onItemClick(isAudio, item)
+
                 } else {//节点isfree为2j时可免费观看，或该课程已经购买。可直接观看
                     //通过props 与父组件通信
-                    this.props.onItemClick(item)
+                    this.props.onItemClick(isAudio, item)
                     this.setState({
                         playingNodeId: item.id
                     })
@@ -69,7 +70,7 @@ export default class CatalogueList extends Component {
                     <View style={styles.childTitle}>
                         <Image style={styles.playIcon} source={item.id === this.state.playingNodeId ? require('../images/icon_playing.png') : require('../images/icon_player.png')}></Image>
                         {
-                            (item.is_free === 2 && !this.props.own) ? (<Text style={styles.tryPlay}>试看</Text>) : (null)
+                            (item.is_free === 2 && !this.props.own) ? (<Text style={styles.tryPlay}>{this.state.isAudio ? "试听" : "试看"}</Text>) : (null)
                         }
                         <Text style={item.id === this.state.playingNodeId ? styles.playingTitle : null}>{item.title}</Text>
                     </View>
@@ -99,8 +100,10 @@ export default class CatalogueList extends Component {
                 tempData.data = item.nodes;
                 return tempData
             });
-            //ToastAndroid.show('header1:' + tempArr[0].title + "item:1" + tempArr[0].data[0].title, ToastAndroid.SHORT);
+            let isAudio = data.media_type == 2
+            //ToastAndroid.show('isAudio:' + isAudio, ToastAndroid.SHORT);
             this.setState({
+                isAudio: isAudio,
                 data: tempArr,
                 //playingNodeId: tempArr[0].data[0].id
             })
@@ -149,8 +152,8 @@ const styles = StyleSheet.create({
     },
     tryPlay: {
         borderWidth: 1,
-        textAlign:"center",
-        textAlignVertical:"center",
+        textAlign: "center",
+        textAlignVertical: "center",
         fontSize: 10,
         borderColor: "#FD5F00",
         borderRadius: 2,

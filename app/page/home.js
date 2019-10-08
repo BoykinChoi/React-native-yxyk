@@ -5,6 +5,7 @@ import {
     Image,
     Text,
     FlatList,
+    StatusBar,
     ActivityIndicator,
     ToastAndroid,
     TouchableOpacity,
@@ -53,7 +54,13 @@ export default class Home extends Component {
                     style={{ width: 18, height: 20, marginRight: 15 }}
                     source={require("../images/tab_me.png")}></Image>
             </TouchableOpacity>
-        )
+        ),
+        //去除Navigation Bar黑线和阴影
+        headerStyle: {
+            borderBottomWidth: 0,
+            elevation: 0,
+            //paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight
+        },
     });
 
 

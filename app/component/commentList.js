@@ -41,9 +41,9 @@ export default class CommentList extends Component {
                     <Text>{item.uname}</Text>
                     <Text>{"赞" + item.love_num}</Text>
                 </View>
-                <Text style={styles.content}>{item.content}</Text>
+                <Text style={styles.content}>{item.content.replace(/<[\/\!]*[^<>]*>/ig, "")}</Text>
                 {
-                    item.mg_list.length > 0 ? (<Text style={styles.reply}>{item.mg_list[0].content}</Text>) : null
+                    item.mg_list.length > 0 ? (<Text style={styles.reply}>{item.mg_list[0].content.replace(/<[\/\!]*[^<>]*>/ig, "")}</Text>) : null
                 }
 
                 <Text>{item.create_time}</Text>

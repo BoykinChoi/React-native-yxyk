@@ -45,7 +45,7 @@ export default class IndustryList extends Component {
     renderItem = ({ item }) => {
         return (<View>
             <TouchableOpacity onPress={() => this.onItemPress(item)}>
-                <Text style={styles.item}>{item.name}</Text>
+                <Text style={[global.industryCateid == item.id ? styles.selected : styles.normal,styles.item]}>{item.name}</Text>
             </TouchableOpacity>
         </View>)
     }
@@ -96,10 +96,17 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomStartRadius: 4,
         borderBottomEndRadius: 4,
-        backgroundColor: "#F7F8F8",
         borderWidth: 1,
+    },
+    normal: {
+        backgroundColor: "#F7F8F8",
         borderColor: "#F7F8F8",
-        borderWidth: 1
+        color: "#000000"
+    },
+    selected: {
+        backgroundColor: "#496AF7",
+        borderColor: "#496AF7",
+        color: "#ffffff"
     }
 
 })

@@ -5,6 +5,7 @@ import {
     Image,
     Text,
     Modal,
+    StatusBar,
     ToastAndroid,
     TouchableOpacity,
 } from "react-native"
@@ -15,7 +16,12 @@ import PromptDialog from '../widget/promptDialog'
 
 export default class CourserDetail extends Component {
     static navigationOptions = {
-        title: "课程详情"
+        headerStyle: {
+            borderBottomWidth: 0,
+            elevation: 0,
+            height: 0
+            //paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight
+        },
     }
     constructor(props) {
         super(props)
@@ -23,7 +29,8 @@ export default class CourserDetail extends Component {
             course: {},
             isLike: false,
             playUrl: "",
-            dialogShow: false
+            dialogShow: false,
+            isAudioPlaying: false
         }
     }
 
@@ -37,28 +44,31 @@ export default class CourserDetail extends Component {
             <View style={styles.bg}>
                 <View style={styles.videoLayout}>
                     {
-                        this.state.playUrl != "" ? (<Video style={styles.video} source={{ uri: this.state.playUrl }}   // Can be a URL or a local file.
-                            ref={(ref) => {
-                                this.player = ref  //方法对引用Video元素的ref引用进行操作
-                            }}                                      // Store reference
-                            onBuffer={this.onBuffer}                // Callback when remote video is buffering
-                            onError={this.onVedioError} // Callback when video cannot be loaded
-                            controls={true}   //显示自带的控制层（有点丑），默认为flase
-                        // style={styles.fullScreen}//组件样式
-                        // rate={this.state.rate}//播放速率
-                        // paused={this.state.paused}//暂停
-                        // volume={this.state.volume}//调节音量
-                        // muted={this.state.muted}//控制音频是否静音
-                        // resizeMode={this.state.resizeMode}//缩放模式
-                        // onLoad={this.onLoad}//加载媒体并准备播放时调用的回调函数。
-                        // onProgress={this.onProgress}//视频播放过程中每个间隔进度单位调用的回调函数
-                        // onEnd={this.onEnd}//视频播放结束时的回调函数
-                        // onAudioBecomingNoisy={this.onAudioBecomingNoisy}//音频变得嘈杂时的回调 - 应暂停视频
-                        // onAudioFocusChanged={this.onAudioFocusChanged}//音频焦点丢失时的回调 - 如果焦点丢失则暂停
-                        // repeat={false}//确定在到达结尾时是否重复播放视频。
-                        />) : (<Image style={styles.video} source={{ uri: this.state.course.img }}></Image>)
+                        this.state.playUrl != "" ? (
+                            <View>
+                                <Video style={[styles.videoLayout, styles.videoPlayer]} source={{ uri: this.state.playUrl }}   // Can be a URL or a local file.
+                                    ref={(ref) => {
+                                        this.player = ref  //方法对引用Video元素的ref引用进行操作
+                                    }}                                      // Store reference
+                                    onBuffer={this.onBuffer}                // Callback when remote video is buffering
+                                    onError={this.onVedioError} // Callback when video cannot be loaded
+                                    controls={true}   //显示自带的控制层（有点丑），默认为flase
+                                // style={styles.fullScreen}//组件样式
+                                // rate={this.state.rate}//播放速率
+                                // paused={this.state.paused}//暂停
+                                // volume={this.state.volume}//调节音量
+                                // muted={this.state.muted}//控制音频是否静音
+                                // resizeMode={this.state.resizeMode}//缩放模式
+                                // onLoad={this.onLoad}//加载媒体并准备播放时调用的回调函数。
+                                // onProgress={this.onProgress}//视频播放过程中每个间隔进度单位调用的回调函数
+                                // onEnd={this.onEnd}//视频播放结束时的回调函数
+                                // onAudioBecomingNoisy={this.onAudioBecomingNoisy}//音频变得嘈杂时的回调 - 应暂停视频
+                                // onAudioFocusChanged={this.onAudioFocusChanged}//音频焦点丢失时的回调 - 如果焦点丢失则暂停
+                                // repeat={false}//确定在到达结尾时是否重复播放视频。
+                                />
+                                {this.state.isAudioPlaying ? <Text style={styles.audioPlaying}>音频播放中...</Text> : null}
+                            </View >) : (<Image style={styles.videoLayout} source={{ uri: this.state.course.img }}></Image>)
                     }
-
                 </View>
                 <View style={styles.intro}>
                     <View>
@@ -93,7 +103,7 @@ export default class CourserDetail extends Component {
                     <View style={styles.line}></View>
                     <View style={styles.catalogueList}>
                         <CatalogueList
-                            onItemClick={(item) => this.onCatalogueItemClick(item)}
+                            onItemClick={(isAudio, item) => this.onCatalogueItemClick(isAudio, item)}
                             courseId={this.props.navigation.getParam('courseId', "NO_ID")}
                             own={this.state.course.is_possess}
                         //isAudio={this.state.course.type ==1} //type 1为音频
@@ -142,11 +152,12 @@ export default class CourserDetail extends Component {
     /**
      * 处理子组件CatalogueList的事件
      */
-    onCatalogueItemClick = (item) => {
+    onCatalogueItemClick = (isAudio, item) => {
         if (item.is_free == 2 || this.state.course.is_possess) //节点isfree为2j时可免费观看，或该课程已经购买。可直接观看
         {
             this.setState({
-                playUrl: item.video_url
+                playUrl: item.video_url,
+                isAudioPlaying: isAudio
             })
         } else {
             this.setState({
@@ -184,7 +195,7 @@ export default class CourserDetail extends Component {
             this.setState({
                 isLike: true,
             })
-            ToastAndroid.show('点赞成功', ToastAndroid.SHORT);
+            //ToastAndroid.show('点赞成功', ToastAndroid.SHORT);
         })
     }
 
@@ -198,20 +209,22 @@ const styles = StyleSheet.create(
             marginBottom: 86
         },
         videoLayout: {
-            //position: 'absolute',
+            height: 200,
+            backgroundColor: "#000000"
+        },
+        videoPlayer: {
+            position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
+            bottom: 0,
         },
-        video: {
+        audioPlaying: {
+            color: "#ffffff",
+            textAlign: "center",
+            textAlignVertical: "center",
             height: 200,
-            backgroundColor: "#000000",
         },
-        // videoBg: {
-        //     position: 'absolute',
-        //     height: 230,
-        //     top: 0,
-        // },
         line: {
             height: 1,
             marginTop: 10,
