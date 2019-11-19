@@ -101,8 +101,8 @@ const styles = StyleSheet.create(
             flex: 1,
         },
         eIcon: {
-            width: 160,
-            height: 160
+            width: 125,
+            height: 166,
         },
 
         title: {

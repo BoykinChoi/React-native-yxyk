@@ -58,7 +58,8 @@ const AppNavigator = createStackNavigator(
         EvaluationReport: {
             screen: EvaluationReport
         }, OrgDetail: {
-            screen: OrgDetail
+            screen: OrgDetail,
+            //headerMode: "none"
         }
     },
     //  {

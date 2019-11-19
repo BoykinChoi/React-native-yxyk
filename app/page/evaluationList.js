@@ -168,7 +168,7 @@ const styles = StyleSheet.create(
             flexDirection: "row",
             margin: 10,
             padding: 10,
-            alignItems: "center",
+            alignItems: "flex-start",
             backgroundColor: "#F7F8F8",
             borderWidth: 1,
             borderColor: "#F7F8F8",
@@ -179,6 +179,7 @@ const styles = StyleSheet.create(
         eItem: {
             marginLeft: 16,
             flex: 1,
+            alignItems:"flex-start"
         },
         title: {
             fontSize: 17,
@@ -188,8 +189,8 @@ const styles = StyleSheet.create(
             color: "#666666"
         },
         eIcon: {
-            width: 86,
-            height: 86,
+            width: 125,
+            height: 166,
         }
 
     }

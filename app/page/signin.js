@@ -62,7 +62,7 @@ export default class SignIn extends Component {
                                 }}>
                                     <Text style={[styles.signInBtn, styles.roundBorder, this.state.taskInfo.is_clock_in ? styles.orangeBg : styles.blueBg]}>{this.state.taskInfo.is_clock_in ? "已打卡" : "打卡"}</Text>
                                 </TouchableOpacity>
-                                <SignInList date={this.state.selectedDay}></SignInList>
+                                {/* <SignInList date={this.state.selectedDay}></SignInList> */}
                             </View>)
                         }
 
@@ -90,7 +90,6 @@ export default class SignIn extends Component {
 
         )
     }
-
 
 
     renderWeekDays = ({ item }) => {

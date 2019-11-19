@@ -87,7 +87,7 @@ export default class OrgDetail extends Component {
                         keyExtractor={(item) => item.id.toString()}
                     ></FlatList>
                 </View>
-            </ScrollView >
+            </ScrollView>
         )
     }
 
@@ -167,7 +167,6 @@ const styles = StyleSheet.create({
     descContent: {
         paddingRight: 20
     },
-
     title: {
         fontSize: 20,
         paddingTop: 16,
