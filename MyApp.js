@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 
 //页面路由
 import AppContainer from "./app/util/route";
 
 export default class MyApp extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {};

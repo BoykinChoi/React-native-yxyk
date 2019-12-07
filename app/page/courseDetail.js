@@ -19,8 +19,9 @@ export default class CourserDetail extends Component {
         headerStyle: {
             borderBottomWidth: 0,
             elevation: 0,
-            height: 0
-            //paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight
+            height: 0,
+            opacity: 0,
+            paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight
         },
     }
     constructor(props) {
@@ -42,6 +43,12 @@ export default class CourserDetail extends Component {
     render() {
         return (
             <View style={styles.bg}>
+                <StatusBar barStyle={"light-content"}
+                    networkActivityIndicatorVisible={true}
+                    showHideTransition={'fade'}
+                    backgroundColor={"black"}
+                    animated={true}
+                    translucent={true} />
                 <View style={styles.videoLayout}>
                     {
                         this.state.playUrl != "" ? (
@@ -66,19 +73,24 @@ export default class CourserDetail extends Component {
                                 // onAudioFocusChanged={this.onAudioFocusChanged}//音频焦点丢失时的回调 - 如果焦点丢失则暂停
                                 // repeat={false}//确定在到达结尾时是否重复播放视频。
                                 />
-                                {this.state.isAudioPlaying ? <Text style={styles.audioPlaying}>音频播放中...</Text> : null}
-                            </View >) : (<Image style={styles.videoLayout} source={{ uri: this.state.course.img }}></Image>)
+                                {this.state.isAudioPlaying ? <View>
+                                    <Text style={styles.audioPlaying}>音频播放中...</Text>
+                                    <Image opacity={0.1} style={[styles.videoLayout, styles.videoPlayer]} source={{ uri: this.state.course.img }}></Image>
+                                </View> : null}
+                            </View >) : (<Image style={[styles.videoLayout, styles.videoPlayer]} source={{ uri: this.state.course.img }}></Image>)
                     }
                 </View>
                 <View style={styles.intro}>
                     <View>
                         <View style={styles.title}>
-                            <Text style={styles.introTitle}>{this.state.course.title}</Text>
-                            {this.state.course.is_possess ? (<Text style={styles.own}>已购</Text>) : (null)}
+                            <Text numberOfLines={2} style={styles.introTitle}>{this.state.course.title}</Text>
+                            <View style={styles.alignCenter}>
+                                <Image style={styles.mediaIcon} source={this.state.course.type === 1 ? require('../images/icon_vedio.png') : require('../images/icon_audio.png')}></Image>
+                                {this.state.course.is_possess ? (<Text style={styles.own}>已购</Text>) : (null)}
+                            </View>
                         </View>
                         <View style={styles.operation}>
                             <View >
-
                                 <Text style={styles.textSmall}>{'分类：' + this.state.course.request_code}</Text>
                                 <Text style={styles.textSmall}>{'学习人数：' + this.state.course.learn_num}</Text>
                             </View>
@@ -205,8 +217,7 @@ const styles = StyleSheet.create(
     {
         bg: {
             flex: 1,
-            flexDirection: "column",
-            marginBottom: 86
+            flexDirection: "column"
         },
         videoLayout: {
             height: 200,
@@ -237,7 +248,9 @@ const styles = StyleSheet.create(
             //top: 230,
             padding: 16,
         },
-
+        catalogueList: {
+            flex: 1
+        },
         textSmall: {
             color: "#666666",
             fontSize: 12
@@ -245,7 +258,7 @@ const styles = StyleSheet.create(
         likeIcon: {
             width: 23,
             height: 23,
-            marginLeft: 22
+            marginLeft: 26
         },
         operation: {
             justifyContent: "space-between",
@@ -254,7 +267,7 @@ const styles = StyleSheet.create(
 
         },
         title: {
-            alignItems: "center",
+            alignItems: "flex-start",
             flexDirection: "row",
             marginBottom: 10
         },
@@ -262,12 +275,21 @@ const styles = StyleSheet.create(
             flex: 1,
             fontSize: 17,
         },
+        alignCenter: {
+            alignItems: "flex-end",
+            justifyContent: "flex-start"
+        },
+        mediaIcon: {
+            width: 23,
+            height: 23
+        },
         own: {
+            marginTop: 6,
             borderWidth: 1,
             textAlign: "center",
             textAlignVertical: "center",
-            fontSize: 11,
-            height: 16,
+            fontSize: 10,
+            height: 14,
             borderColor: "#FD5F00",
             borderRadius: 2,
             marginLeft: 16,

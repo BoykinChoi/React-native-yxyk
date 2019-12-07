@@ -78,6 +78,12 @@ export default class Home extends Component {
             <ActivityIndicator size="large" />
         ) : (
                 <View>
+                    <StatusBar barStyle={"dark-content"}
+                        networkActivityIndicatorVisible={true}
+                        showHideTransition={'fade'}
+                        backgroundColor={"#ffffff"}
+                        animated={true}
+                    />
                     {
                         this.state.courseData.length > 0 ? (<FlatList
                             style={styles.listContent}

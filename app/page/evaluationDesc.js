@@ -97,12 +97,14 @@ const styles = StyleSheet.create(
             borderRadius: 6
         },
         eItem: {
-            marginLeft: 16,
+            justifyContent:"center",
+            marginLeft: 10,
+            marginRight:10,
             flex: 1,
         },
         eIcon: {
             width: 125,
-            height: 166,
+            height: 86,
         },
 
         title: {

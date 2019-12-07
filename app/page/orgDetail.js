@@ -19,6 +19,7 @@ export default class OrgDetail extends Component {
         headerStyle: {
             borderBottomWidth: 0,
             elevation: 0,
+            opacity: 0,
             height: 0
             //paddingTop: Platform.OS === "ios" ? 0 : StatusBar.currentHeight
         },
@@ -55,7 +56,9 @@ export default class OrgDetail extends Component {
         return (
             <ScrollView style={styles.page}>
                 <View style={styles.header}>
-                    <Image style={styles.banner} source={{ uri: this.state.bgImg }}></Image>
+
+                    <Image style={styles.banner} source={this.state.bgImg.length == 0 ? require("../images/report_bg.png") : { uri: this.state.bgImg }}></Image>
+
                     <View style={[styles.infoBg, styles.info]}>
                         <Image style={styles.logo} source={{ uri: this.state.orgInfo.brand_logo }}></Image>
                         <Text style={styles.orgname}>{this.state.orgInfo.brand_name}</Text>
@@ -105,9 +108,11 @@ export default class OrgDetail extends Component {
     renderClassItem({ item }) {
         return (<View style={styles.classItem}>
             <Image style={styles.classHeader} source={{ uri: item.img }}></Image>
-            <Text style={styles.smallTitle} >{item.title}</Text>
-            <Text style={styles.samll}>{item.type}</Text>
-            <Text style={styles.samll}>{"报名人数:" + item.nums}</Text>
+            <Text numberOfLines={2} style={[styles.smallTitle, styles.flexLayout]} >{item.title}</Text>
+            <View style={styles.classItemBottom}>
+                <Text style={styles.samll}>{item.type}</Text>
+                <Text style={styles.samll}>{"报名人数:" + item.nums}</Text>
+            </View>
         </View>)
     }
 
@@ -169,9 +174,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        paddingTop: 16,
+        paddingTop: 20,
         fontWeight: "bold",
-        paddingBottom: 16
+        paddingBottom: 20
     },
 
     desc: {
@@ -222,18 +227,23 @@ const styles = StyleSheet.create({
     classItem: {
         marginRight: 10,
         width: 170,
-        height: 210,
+        height: 160,
+    },
+    classItemBottom: {
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     classHeader: {
         width: 170,
-        height: 120,
+        marginBottom: 10,
+        height: 90,
     },
     smallTitle: {
         fontSize: 14,
         marginBottom: 6
     },
     samll: {
-        fontSize: 12,
+        fontSize: 11,
         color: "#666666"
     },
     titleWhite: {
@@ -246,11 +256,17 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: "#f2f4f5"
     },
-    balance: {
+    addressLayout: {
         flex: 1,
-        justifyContent: "center",
+        paddingTop: 6,
+        paddingBottom: 6,
         flexDirection: "row",
         alignItems: "center",
+    },
+    arrowRight: {
+        width: 14,
+        width: 24,
+        marginRight: 10
     },
     icon: {
         width: 18,
@@ -261,7 +277,8 @@ const styles = StyleSheet.create({
         height: 0.5,
         backgroundColor: "#a6a6a6",
         marginTop: 6,
-        marginBottom: 6
+        marginRight: 20,
+        marginBottom: 10
     },
     items: {
         flex: 2,

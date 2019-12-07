@@ -61,10 +61,18 @@ export default class OfflineOrg extends Component {
                 <View style={[styles.flexLayout, styles.marginRight5]}>
                     <Image style={styles.coursePic} source={{ uri: item.classes_list.lists[0].img }}></Image>
                     <Text style={styles.courseTitle} numberOfLines={2}>{item.classes_list.lists[0].title}</Text>
+                    <View style={styles.classItemBottom}>
+                        <Text style={styles.samll}>{item.classes_list.lists[0].type}</Text>
+                        <Text style={styles.samll}>{"报名人数:" + item.classes_list.lists[0].nums}</Text>
+                    </View>
                 </View>
                 <View style={[styles.flexLayout, styles.marginLeft5]}>
                     <Image style={styles.coursePic} source={{ uri: item.classes_list.lists[1].img }}></Image>
                     <Text style={styles.courseTitle} numberOfLines={2} >{item.classes_list.lists[1].title}</Text>
+                    <View style={styles.classItemBottom}>
+                        <Text style={styles.samll}>{item.classes_list.lists[1].type}</Text>
+                        <Text style={styles.samll}>{"报名人数:" + item.classes_list.lists[1].nums}</Text>
+                    </View>
                 </View>
             </View>
             <View style={styles.rowDirection}>
@@ -140,13 +148,19 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: 'bold'
     },
+    samll: {
+        fontSize: 11,
+        color: "#666666"
+    },
     courseTitle: {
         marginTop: 10,
+        marginBottom: 10,
         minHeight: 35
     },
     textSmall: {
         fontSize: 12,
-        marginTop: 4
+        marginTop: 4,
+        color: "#666666"
     },
     coursePic: {
         height: 88
@@ -183,6 +197,10 @@ const styles = StyleSheet.create({
         width: 8,
         height: 12,
         marginLeft: 4
-    }
+    },
+    classItemBottom: {
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
 
 })

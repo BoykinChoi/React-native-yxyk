@@ -51,35 +51,40 @@ export default class CatalogueList extends Component {
      */
     renderItem = ({ item }) => {
         return (
-            <TouchableOpacity onPress={() => {
-                let isAudio = this.state.isAudio
-                if (item.is_free == 1 && !this.props.own) {
-                    //通过props 与父组件通信
-                    this.props.onItemClick(isAudio, item)
+            <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => {
+                    let isAudio = this.state.isAudio
+                    if (item.is_free == 1 && !this.props.own) {
+                        //通过props 与父组件通信
+                        this.props.onItemClick(isAudio, item)
 
-                } else {//节点isfree为2j时可免费观看，或该课程已经购买。可直接观看
-                    //通过props 与父组件通信
-                    this.props.onItemClick(isAudio, item)
-                    this.setState({
-                        playingNodeId: item.id
-                    })
-                }
+                    } else {//节点isfree为2j时可免费观看，或该课程已经购买。可直接观看
+                        //通过props 与父组件通信
+                        this.props.onItemClick(isAudio, item)
+                        this.setState({
+                            playingNodeId: item.id
+                        })
+                    }
 
-            }}>
+                }}>
                 <View style={styles.childContent}>
-                    <View style={styles.childTitle}>
+                    <View style={styles.childTitleLayout}>
                         <Image style={styles.playIcon} source={item.id === this.state.playingNodeId ? require('../images/icon_playing.png') : require('../images/icon_player.png')}></Image>
                         {
                             (item.is_free === 2 && !this.props.own) ? (<Text style={styles.tryPlay}>{this.state.isAudio ? "试听" : "试看"}</Text>) : (null)
                         }
-                        <Text style={item.id === this.state.playingNodeId ? styles.playingTitle : null}>{item.title}</Text>
+                        <View></View>
+                        <Text style={[item.id === this.state.playingNodeId ? styles.playingColor : null, styles.title]}>{item.title}</Text>
                     </View>
-                    <Text style={styles.videoTime}>{"时长:" + item.video_time}</Text>
+                    <View style={styles.palyinfo}>
+                        <Text style={[styles.videoTime, item.id === this.state.playingNodeId ? styles.playingColor : null]}>{"时长:" + item.video_time}</Text>
+                        <Text style={[styles.videoTime, item.id === this.state.playingNodeId ? styles.playingColor : null]}>{"播放至:" + item.last_play_rate + "%"}</Text>
+                    </View>
                 </View>
 
             </TouchableOpacity>)
     }
-
 
     getCatelogueData = () => {
 
@@ -124,8 +129,8 @@ const styles = StyleSheet.create({
         color: "#000000"
     },
     childContent: {
-        paddingLeft: 10,
-        paddingRight: 10,
+        marginLeft: 10,
+        marginRight: 10,
         marginBottom: 20
     },
     childItem: {
@@ -133,16 +138,23 @@ const styles = StyleSheet.create({
         alignContent: "center",
         flexWrap: "wrap"
     },
-    childTitle: {
+    childTitleLayout: {
         flexDirection: "row",
         alignItems: "center",
     },
-    playingTitle: {
+    title: {
+        flex: 1,
+    },
+    palyinfo: {
+        flexDirection: "row"
+    },
+    playingColor: {
         color: "#FD5F00"
     },
     videoTime: {
         marginLeft: 28,
-        fontSize: 12,
+        marginTop: 6,
+        fontSize: 10,
         color: "#666666"
     },
     playIcon: {
@@ -157,7 +169,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         borderColor: "#FD5F00",
         borderRadius: 2,
-        marginRight: 6,
+        marginRight: 10,
         paddingLeft: 4,
         paddingRight: 4,
         color: "#FD5F00"
