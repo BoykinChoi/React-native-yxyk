@@ -34,7 +34,7 @@ export default class EvaluationDesc extends Component {
                     <View style={styles.eItemBg}>
                         <Image style={styles.eIcon} source={{ uri: this.state.evaluation.list_img }}></Image>
                         <View style={styles.eItem}>
-                            <Text style={styles.title}>{this.state.evaluation.title}</Text>
+                            <Text numberOfLines={2} style={styles.title}>{this.state.evaluation.title}</Text>
                             <Text style={styles.desc}>{this.state.evaluation.des}</Text>
                         </View>
                     </View>
@@ -97,9 +97,9 @@ const styles = StyleSheet.create(
             borderRadius: 6
         },
         eItem: {
-            justifyContent:"center",
+            justifyContent: "center",
             marginLeft: 10,
-            marginRight:10,
+            marginRight: 10,
             flex: 1,
         },
         eIcon: {
@@ -119,6 +119,7 @@ const styles = StyleSheet.create(
         },
         info: {
             margin: 10,
+            fontSize: 12,
             padding: 20
         },
         desc: {

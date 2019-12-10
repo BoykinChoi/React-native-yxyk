@@ -45,7 +45,6 @@ export default class CommentList extends Component {
                 {
                     item.mg_list.length > 0 ? (<Text style={styles.reply}>{item.mg_list[0].content.replace(/<[\/\!]*[^<>]*>/ig, "")}</Text>) : null
                 }
-
                 <Text>{item.create_time}</Text>
             </View>
         </View>)

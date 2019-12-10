@@ -77,15 +77,26 @@ export default class SignInList extends Component {
         </View>)
     }
 
-    renderItem({ item }) {
-        return (<View style={styles.item}>
+    /**
+     * 写成箭头函数绑定this
+     */
+    renderItem = ({ item }) => {
+        return (<View style={styles.item} >
             <Image style={styles.headPic} source={{ uri: item.user_img }}></Image>
             <View style={styles.content}>
                 <View style={styles.titleLayout}>
                     <Text>{item.user_name}</Text>
                     <Text>{"赞" + item.love}</Text>
                 </View>
-                <Text style={styles.content}>{item.media_len + "s"}</Text>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => {
+                    //打卡页Singin.js 里回调
+                    this.props.onCommentSoundClick(item.content)
+                }}>
+                    <View style={styles.trumpetLayout}>
+                        <Text style={styles.sound}>{item.media_len + "＂"}</Text>
+                        <Image style={styles.trumpet} source={require("../images/trumpet.png")}></Image>
+                    </View>
+                </TouchableOpacity>
                 {
                     item.teacher_reply === "" ? null : (<Text style={styles.reply}>{item.teacher_reply}</Text>)
                 }
@@ -115,38 +126,52 @@ export default class SignInList extends Component {
 
 const styles = StyleSheet.create({
     list: {
+        flex: 1,
         padding: 16
     },
     item: {
         flexDirection: "row",
+        alignItems: "flex-start",
         marginBottom: 16
     },
     headPic: {
         width: 30,
         height: 30,
-        borderWidth: 1,
+        justifyContent: "center",
+        borderWidth: 0.5,
+        marginRight: 16,
         borderRadius: 1024,
         borderColor: "#000000"
     },
     content: {
-        marginLeft: 16,
-        flex: 1
-    },
-    content: {
-        marginTop: 10,
+        flex: 1,
         marginBottom: 10,
         fontSize: 16
     },
+    sound: {
+        color: "#FD5F00"
+    },
     reply: {
         padding: 6,
-        fontSize: 16,
+        fontSize: 13,
+        marginTop: 10,
         marginBottom: 10,
         backgroundColor: "#F7F8F8"
-
-
     },
     titleLayout: {
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between"
+    },
+    trumpetLayout: {
+        flex: 1,
+        marginTop: 10,
+        alignItems: "center",
+        flexDirection: "row",
+    },
+    trumpet: {
+        marginLeft: 6,
+        width: 20,
+        height: 20,
     }
 })

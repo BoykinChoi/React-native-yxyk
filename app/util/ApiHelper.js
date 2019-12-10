@@ -1,6 +1,7 @@
 import { Platform, ToastAndroid } from "react-native";
 
 const HOST_URL = "http://dev_cp.zzyzsw.com/api/"
+//const HOST_URL = "http://cp.zzyzsw.com/api/"; //正式服
 
 /**
  * 封装POST请求
@@ -32,7 +33,6 @@ requestData = (url, prams, callBack) => {
         .catch(error =>{
            
         })
-
 
 }
 

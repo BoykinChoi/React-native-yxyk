@@ -172,7 +172,7 @@ const styles = StyleSheet.create(
             borderColor: "#000000",
             shadowColor: "#F7F8F8",
             shadowRadius: 3,
-            borderRadius: 6
+            borderRadius: 4
         },
         eItem: {
             justifyContent: "center",
@@ -188,7 +188,11 @@ const styles = StyleSheet.create(
             color: "#666666"
         },
         eIcon: {
+            borderWidth: 0.1,
+            borderColor: "#000000",
             width: 125,
+            borderBottomLeftRadius:4,
+            borderTopLeftRadius:4,
             height: 86,
         }
 

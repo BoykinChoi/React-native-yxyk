@@ -6,6 +6,7 @@ import {
     Text,
     FlatList,
     StatusBar,
+    ScrollView,
     ActivityIndicator,
     ToastAndroid,
     TouchableOpacity,
@@ -14,6 +15,7 @@ import {
 
 import Banner from '../component/banner'
 import SignInPanel from '../component/signinPanel'
+import OfflineCourseList from '../component/offlineCourseList'
 
 import requestData from '../util/ApiHelper'
 
@@ -85,7 +87,7 @@ export default class Home extends Component {
                         animated={true}
                     />
                     {
-                        this.state.courseData.length > 0 ? (<FlatList
+                        this.state.courseData.length > 0 ? (<ScrollView><FlatList
                             style={styles.listContent}
                             data={this.state.courseData}
                             renderItem={this.renderCourse}
@@ -97,7 +99,8 @@ export default class Home extends Component {
                                 navigation={this.props.navigation}
                             />}
                             keyExtractor={item => item.id.toString()}
-                        ></FlatList>) : (<Text>暂无数据</Text>)
+                        ></FlatList>
+                            <OfflineCourseList /></ScrollView>) : (<Text>暂无数据</Text>)
                     }
 
                 </View>
@@ -148,7 +151,7 @@ export default class Home extends Component {
             }}>
                 <View>
                     <Image source={{ uri: item.img }} style={styles.thumbnail} />
-                    <Text style={styles.title}>{item.title}</Text>
+                    <Text numberOfLines={2} style={styles.title}>{item.title}</Text>
                     <View style={styles.itemBottom}>
                         <Text style={{ fontSize: 12 }}>{"学习人数:" + item.learn_num}</Text>
                         <Text style={{ color: "#FD5F00" }}>{"￥" + item.price}</Text>
@@ -209,6 +212,7 @@ export default class Home extends Component {
 
             //token设置为全局变量
             global.userToken = data.token
+            global.industryCateid = 38
 
             // 使用key来保存数据（key-only）。这些数据一般是全局独有的，需要谨慎单独处理的数据
             // 批量数据请使用key和id来保存(key-id)，具体请往后看
@@ -353,7 +357,7 @@ const styles = StyleSheet.create({
     thumbnail: {
         marginTop: 10,
         marginBottom: 10,
-        borderWidth: 1,
+        borderWidth: 0.1,
         borderColor: "#e2e2e2",
         borderRadius: 6,
         height: 160
